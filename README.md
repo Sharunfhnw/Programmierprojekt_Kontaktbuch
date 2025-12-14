@@ -34,11 +34,7 @@ Voraussetzungen:
 
 Starten des Programms:
 ```text
-python main.py
-```
-oder
-```text
-python DSS_Contact_Manager.py
+py DSS_Contact_Manager.py
 ```
 ---
 ## 🏛️ Die Architektur
