@@ -93,35 +93,50 @@ Bitte wählen Sie eine Option:__
 
 ## 📝 Code: Kontakt hinzufügen (Administrators-Ansicht)
 ```text
-def kontakt_hinzufügen():
-    print("\n--- Neuen Kontakt hinzufügen ---")
-    name = input("Name: ").strip()
+# ============================================
+# KONTAKT-OPERATIONEN
+# ============================================
+def kontakt_hinzufuegen():
+    """Fügt einen neuen Kontakt hinzu."""
+    print("\n" + "=" * 50)
+    print("NEUEN KONTAKT HINZUFÜGEN")
+    print("=" * 50)
+    try:
+        name = ""
+        while not name:
+            name = input("Name: ").strip()
+            if not name:
+                print("[X] Name darf nicht leer sein!")
 
-    while not name:
-        print("Name darf nicht leer sein.")
-        name = input("Name: ").strip()
+        telefon = eingabe_mit_wiederholung(
+            "Telefonnummer: ",
+            ist_gueltige_telefonnummer,
+            "[X] Ungültige Telefonnummer! Es sind nur Zahlen erlaubt und das Feld darf nicht leer sein.",
+            optional=False,
+        )
 
-    phone = input("Telefonnummer: ").strip()
-    while not phone.isdigit():
-        print("Telefonnummer darf nur Zahlen enthalten.")
-        phone = input("Telefonnummer: ").strip()
+        email = eingabe_mit_wiederholung(
+            "E-Mail-Adresse (optional): ",
+            ist_gueltige_email,
+            "[X] Ungültige E-Mail-Adresse! Wenn eine E-Mail eingegeben wird, muss sie ein '@' enthalten.",
+            optional=True,
+        )
 
-    email = input("E-Mail: ").strip()
-    while "@" not in email:
-        print("Ungültige E-Mail-Adresse. Muss ein '@' enthalten.")
-        email = input("E-Mail: ").strip()
+        adresse = input("Adresse (optional): ").strip()
 
-    address = input("Adresse: ").strip()
+        kontakte = kontakte_laden()
+        kontakte.append(
+            {"name": name, "telefon": telefon, "email": email, "adresse": adresse}
+        )
 
-    contacts.append({
-        "name": name,
-        "phone": phone,
-        "email": email,
-        "address": address
-    })
+        if kontakte_speichern(kontakte):
+            print(f'\n[OK] Kontakt "{name}" erfolgreich gespeichert!')
 
-    print("\nKontakt wurde erfolgreich gespeichert!")
-```
+    except KeyboardInterrupt:
+        print("\nAbgebrochen.")
+    except Exception as e:
+        print(f"[FEHLER] Fehler: {e}")
+ ```
 ----
 
 ## 🧪 Datenvalidierung
